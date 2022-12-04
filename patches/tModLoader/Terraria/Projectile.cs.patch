@@ -398,6 +398,28 @@
  			if (friendly && owner == Main.myPlayer && !npcProj) {
  				if ((aiStyle == 16 && !ProjectileID.Sets.RocketsSkipDamageForPlayers[type] && (timeLeft <= 1 || type == 108 || type == 164)) || (type == 286 && localAI[1] == -1f)) {
  					int myPlayer = Main.myPlayer;
+@@ -9099,7 +_,11 @@
+ 								pvp = false;
+ 							}
+ 
+-							if (Main.player[myPlayer].Hurt(PlayerDeathReason.ByProjectile(playerIndex, whoAmI), num4, base.direction, pvp) > 0.0 && !Main.player[myPlayer].dead)
++							PlayerLoader.ModifyHitByOwnProjectile(Main.player[myPlayer], this, ref num4);
++
++							double realDamage = Main.player[myPlayer].Hurt(PlayerDeathReason.ByProjectile(playerIndex, whoAmI), num4, base.direction, pvp);
++
++							if (realDamage > 0.0 && !Main.player[myPlayer].dead)
+ 								StatusPlayer(myPlayer);
+ 
+ 							if (trap) {
+@@ -9107,6 +_,8 @@
+ 								if (Main.player[myPlayer].dead)
+ 									AchievementsHelper.HandleSpecialEvent(Main.player[myPlayer], 4);
+ 							}
++
++							PlayerLoader.OnHitByOwnProjectile(Main.player[myPlayer], this, (int)realDamage);
+ 						}
+ 					}
+ 				}
 @@ -9211,7 +_,9 @@
  							num5 = 1.9f;
  							break;

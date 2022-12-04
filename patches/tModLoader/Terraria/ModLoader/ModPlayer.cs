@@ -731,12 +731,28 @@ namespace Terraria.ModLoader
 		}
 
 		/// <summary>
+		/// Allows you to modify the damage when this player is hit by their own projectile.
+		/// </summary>
+		/// <param name="proj"></param>
+		/// <param name="damage"></param>
+		public virtual void ModifyHitByOwnProjectile(Projectile proj, ref int damage) {
+		}
+
+		/// <summary>
 		/// Allows you to create special effects when a hostile projectile hits this player.
 		/// </summary>
 		/// <param name="proj"></param>
 		/// <param name="damage"></param>
 		/// <param name="crit"></param>
 		public virtual void OnHitByProjectile(Projectile proj, int damage, bool crit) {
+		}
+
+		/// <summary>
+		/// Allows you to create special effects when this player is hit by their own projectile.
+		/// </summary>
+		/// <param name="proj"></param>
+		/// <param name="damage"></param>
+		public virtual void OnHitByOwnProjectile(Projectile proj, int damage) {
 		}
 
 		/// <summary>

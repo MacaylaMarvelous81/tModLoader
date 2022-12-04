@@ -902,11 +902,29 @@ namespace Terraria.ModLoader
 			}
 		}
 
+		private delegate void DelegateModifyHitByOwnProjectile(Projectile proj, ref int damage);
+		private static HookList HookModifyHitByOwnProjectile = AddHook<DelegateModifyHitByOwnProjectile>(p => p.ModifyHitByOwnProjectile);
+
+		public static void ModifyHitByOwnProjectile(Player player, Projectile proj, ref int damage) {
+			foreach (var modPlayer in HookModifyHitByOwnProjectile.Enumerate(player.modPlayers)) {
+				modPlayer.ModifyHitByOwnProjectile(proj, ref damage);
+			}
+		}
+
 		private static HookList HookOnHitByProjectile = AddHook<Action<Projectile, int, bool>>(p => p.OnHitByProjectile);
 
 		public static void OnHitByProjectile(Player player, Projectile proj, int damage, bool crit) {
 			foreach (var modPlayer in HookOnHitByProjectile.Enumerate(player.modPlayers)) {
 				modPlayer.OnHitByProjectile(proj, damage, crit);
+			}
+		}
+
+		private delegate void DelegateOnHitByOwnProjectile(Projectile proj, int damage);
+		private static HookList HookOnHitByOwnProjectile = AddHook<DelegateOnHitByOwnProjectile>(p => p.OnHitByOwnProjectile);
+
+		public static void OnHitByOwnProjectile(Player player, Projectile proj, int damage) {
+			foreach (var modPlayer in HookOnHitByOwnProjectile.Enumerate(player.modPlayers)) {
+				modPlayer.OnHitByOwnProjectile(proj, damage);
 			}
 		}
 
